@@ -1,0 +1,30 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "title",
+				"type": "nvarchar"
+			},
+			{
+				"name": "sizes",
+				"type": "nvarchar"
+			},
+			{
+				"name": "price",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "glasses"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

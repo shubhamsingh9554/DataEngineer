@@ -1,0 +1,9 @@
+{
+	"name": "shubhamsinghthakurdatafactorymainpocjman1",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8b760f85-25bf-45f0-bf60-b76b39d58e4e",
+		"tenantId": "a1cc5522-210f-403e-b3f4-0d670d6075ef"
+	}
+}

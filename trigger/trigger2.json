@@ -1,0 +1,24 @@
+{
+	"name": "trigger2",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipelinecsvtojson",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/inputcsv/blobs/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/6f1b8490-b398-41ab-9386-6bf8b52819b7/resourceGroups/shubhamsinghthakur-resource-groupMain/providers/Microsoft.Storage/storageAccounts/thakurstorage8858",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
