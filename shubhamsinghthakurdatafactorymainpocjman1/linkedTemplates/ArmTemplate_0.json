@@ -38,10 +38,6 @@
 		"trigger1_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/6f1b8490-b398-41ab-9386-6bf8b52819b7/resourceGroups/shubhamsinghthakur-resource-groupMain/providers/Microsoft.Storage/storageAccounts/thakurstorage8858"
-		},
-		"trigger2_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/6f1b8490-b398-41ab-9386-6bf8b52819b7/resourceGroups/shubhamsinghthakur-resource-groupMain/providers/Microsoft.Storage/storageAccounts/thakurstorage8858"
 		}
 	},
 	"variables": {
@@ -158,6 +154,51 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PI_TopCustomerByQuantity')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "TopCustomerByQuantity",
+						"type": "Script",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"linkedServiceName": {
+							"referenceName": "AzureSqlDbLinkedServiceMain",
+							"type": "LinkedServiceReference"
+						},
+						"typeProperties": {
+							"scripts": [
+								{
+									"type": "Query",
+									"text": "SELECT c.first_name, c.last_name, c.customer_id\nFROM [dbo].[customersMain] c\nJOIN (\n    SELECT customer_id, SUM(CAST(quantity AS INT)) AS total_quantity\n    FROM [dbo].[transactionMain]\n    GROUP BY customer_id\n) t ON c.customer_id = t.customer_id\nWHERE t.total_quantity = (\n    SELECT MAX(total_quantity)\n    FROM (\n        SELECT SUM(CAST(quantity AS INT)) AS total_quantity\n        FROM [dbo].[transactionMain]\n        GROUP BY customer_id\n    ) max_quantity\n);\n"
+								}
+							],
+							"scriptBlockExecutionTimeout": "02:00:00"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Transformation"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDbLinkedServiceMain')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AzureDBMain')]",
@@ -823,36 +864,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
 				"[concat(variables('factoryId'), '/datasets/Json1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger2')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipelinecsvtojson",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/inputcsv/blobs/",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger2_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipelinecsvtojson')]"
 			]
 		}
 	]
