@@ -1,0 +1,42 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "shubhamsinghthakurdatafactorymainpocjman1"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage3csvjson_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase2linkservice_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDbLinkedServiceMain_connectionString": {
+			"value": ""
+		},
+		"blbStorageMain_connectionString": {
+			"value": ""
+		},
+		"bloblinkedservice_connectionString": {
+			"value": ""
+		},
+		"trigger1_properties_typeProperties_scope": {
+			"value": "/subscriptions/6f1b8490-b398-41ab-9386-6bf8b52819b7/resourceGroups/shubhamsinghthakur-resource-groupMain/providers/Microsoft.Storage/storageAccounts/thakurstorage8858"
+		},
+		"trigger2_properties_typeProperties_scope": {
+			"value": "/subscriptions/6f1b8490-b398-41ab-9386-6bf8b52819b7/resourceGroups/shubhamsinghthakur-resource-groupMain/providers/Microsoft.Storage/storageAccounts/thakurstorage8858"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
